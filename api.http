@@ -2,6 +2,10 @@ POST http://localhost:3333/login
 Content-Type: application/json
 
 {
-  "username": "user1@user.com",
+  "username": "user2@user.com",
   "password": "123456"
 }
+
+###
+GET http://localhost:3333/teste
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoidXNlcjFAdXNlci5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NzUzNTM5MTAsImV4cCI6MTY3NTM1Mzk3MH0.5hwb6DV25KH0Uj5YnJls2JhEYe4KF_vHeb7qMA7D44A

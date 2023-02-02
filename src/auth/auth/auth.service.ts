@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
-const users = [
+const users: dbUser[] = [
   {
     id: 1,
     username: 'user1@user.com',
@@ -23,7 +25,38 @@ const users = [
 
 @Injectable()
 export class AuthService {
+  
+  constructor(private jwtService: JwtService){}
+
   login(username, password) {
-    console.log(username, password)
+    const user = this.validateCredentials(username, password)
+
+    const payload = {
+      sub: user?.id,
+      username: user?.username,
+      role: user?.role
+    }
+
+    return this.jwtService.sign(payload)
   }
+
+  validateCredentials(username: string, password:string): dbUser {
+    const user = users.find( u => u.username === username)
+    if(!user){
+      return null
+    }
+
+    if(bcrypt.compareSync(password, user.password)){
+      return user
+    }
+
+    return null
+  }
+}
+
+export interface dbUser {
+  id: number
+  username: string
+  password: string
+  role: string
 }
